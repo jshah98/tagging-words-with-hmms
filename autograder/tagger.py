@@ -99,7 +99,7 @@ def tag(training_list, test_file, output_file):
     # d = dict(em_df.idxmax())
     # t = dict(trans_df.idxmax())
 
-    ind = list(em_df.index)
+    #ind = list(em_df.index)
 
 
     print(trans_df.head(10))
@@ -115,7 +115,12 @@ def tag(training_list, test_file, output_file):
             tr_p = 1/len(trans_df.index)
 
             if i in em_df.columns:
-                if word in ind:
+                #if word in ind:
+                try:
+                    em_p = em_df.loc[word, i]
+                except:
+                    em_p = 1/len(tags)
+                else:
                     em_p = em_df.loc[word, i]
                 tr_p = trans_df.loc[prev_tag, i]
 
