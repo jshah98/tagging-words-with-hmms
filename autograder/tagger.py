@@ -4,7 +4,7 @@
 import os
 import sys
 import pandas as pd
-
+import time
 
 def normalize(df):
     for col in df.columns:
@@ -66,6 +66,8 @@ def build_tables(input):
 def tag(training_list, test_file, output_file):
     # Tag the words from the untagged input file and write them into the output file.
     # Doesn't do much else beyond that yet.
+    start_time = time.time()
+
     print("Tagging the file.")
     print(training_list, test_file, output_file)
 
@@ -141,7 +143,11 @@ def tag(training_list, test_file, output_file):
         prev_tag = tag_w
         s = word + " : " + tag_w + "\n"
         f.write(s)
+        if time.time() - start_time > 598:
+            print("TIMEOUT")
+            break
     f.close()
+    print("TIME: ", time.time() - start_time)
 
     #print(get_results(test_file, output_file))
 
