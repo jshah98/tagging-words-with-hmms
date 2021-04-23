@@ -1,0 +1,24 @@
+Line 11: expected <before : PRP-CJS> but got <before : PRP>
+Line 12: expected <him : NP0> but got <him : PNP>
+Line 22: expected <realized : VVN-VVD> but got <realized : VVD>
+Line 38: expected <New : NP0> but got <New : AJ0>
+Line 54: expected <after : PRP-CJS> but got <after : PRP>
+Line 57: expected <straight : AV0-AJ0> but got <straight : AV0>
+Line 58: expected <on : PRP> but got <on : AVP>
+Line 78: expected <in : AVP-PRP> but got <in : PRP>
+Line 128: expected <one : PNI-CRD> but got <one : CRD>
+Line 129: expected <of : NP0> but got <of : PRF>
+Line 142: expected <pushed : VVN-VVD> but got <pushed : VVD>
+Line 157: expected <on : AVP-PRP> but got <on : PRP>
+Line 165: expected <off : AVP-PRP> but got <off : PRP-AVP>
+Line 168: expected <in : AVP-PRP> but got <in : PRP>
+Line 171: expected <to : TO0> but got <to : PRP>
+Line 172: expected <one : NP0> but got <one : CRD>
+Line 179: expected <Scot : NN1-NP0> but got <Scot : NN1>
+Line 180: expected <in : NP0> but got <in : PRP>
+Line 184: expected <suit : VVB-NN1> but got <suit : NN1>
+Line 185: expected <who : NP0> but got <who : PNQ>
+Line 187: expected <walking : VVG-NN1> but got <walking : VVG>
+Line 188: expected <over : AVP-PRP> but got <over : AVP>
+Total words seen: 202.
+Total matches: 180.

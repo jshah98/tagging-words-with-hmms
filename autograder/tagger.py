@@ -28,17 +28,17 @@ def build_tables(input):
         col = line.index(":")
 
         # gets curr tag
-        tag = line[col+2:]
+        tag_w = line[col+2:]
 
         if prev_tag not in trans:
             trans[prev_tag] = {}
-        if tag not in trans[prev_tag]:
-            trans[prev_tag][tag] = 0
-        trans[prev_tag][tag] += 1
+        if tag_w not in trans[prev_tag]:
+            trans[prev_tag][tag_w] = 0
+        trans[prev_tag][tag_w] += 1
 
         # to get all unique tags
-        if tag not in tags:
-            tags.append(tag)
+        if tag_w not in tags:
+            tags.append(tag_w)
 
         # gets curr word
         word = line[:col-1]
@@ -46,18 +46,20 @@ def build_tables(input):
         # for each word, increments the appropriate tag
         if word not in em:
             em[word]= {}
-        if tag not in em[word]:
-            em[word][tag] = 0
-        em[word][tag] += 1
+        if tag_w not in em[word]:
+            em[word][tag_w] = 0
+        em[word][tag_w] += 1
 
-        prev_tag = tag
+        prev_tag = tag_w
 
     em_df = pd.DataFrame(em).transpose()
     em_df = em_df.fillna(0)
     em_df = normalize(em_df)
 
     trans_df = pd.DataFrame(trans).transpose()
+    trans_df = trans_df.fillna(0)
     trans_df = normalize(trans_df)
+
     return em_df, trans_df, tags
 
 
@@ -95,14 +97,29 @@ def tag(training_list, test_file, output_file):
     # d = dict(em_df.idxmax())
     # t = dict(trans_df.idxmax())
 
-    prev_tag = 'PUN'
+    ind = list(em_df.index)
+
+
+    print(trans_df.head(10))
+    print(em_df.head(10))
+    prev_tag = 'Start'
     for word in words:
+        if word == '':
+            continue
         p = {}
         for i in tags:
 
-            p[i] = em_df.loc[word, i] * trans_df.loc[prev_tag, i]
-            if p[i] == 0:
-                p[i] = 1/(len(tags)**2)
+            em_p = 1/len(tags)
+            tr_p = 1/len(trans_df.index)
+
+            if i in em_df.columns:
+                if word in ind:
+                    em_p = em_df.loc[word, i]
+                tr_p = trans_df.loc[prev_tag, i]
+
+
+            p[i] = em_p * tr_p
+            #print(i, p[i])
 
             # if word in t and word in d:
             #     if em_df[word].max() > trans_df[word].max():
@@ -116,11 +133,13 @@ def tag(training_list, test_file, output_file):
             #         tag = t[word]
             #     else:
             #         tag = tags[-1]
+        if 'Start' in p:
+            del p['Start']
+        tag_w = max(p, key=p.get)
+        p.clear()
 
-        tag = max(p, key=p.get)
-
-        prev_tag = tag
-        s = word + " : " + tag + "\n"
+        prev_tag = tag_w
+        s = word + " : " + tag_w + "\n"
         f.write(s)
     f.close()
 
